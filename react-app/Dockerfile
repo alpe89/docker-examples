@@ -10,12 +10,8 @@ USER node
 # cache al meglio
 COPY --chown=node package*.json .
 # Avvio l'installazione delle dipendenze tramite npm
-RUN npm ci --silent
-# Copio i restanti file nel container
-COPY --chown=node . .
-# Eseguo la build
-RUN npm run build
+RUN npm install
 # Comando di default da eseguire all'avvio del container
-CMD ["npm", "run", "serve"]
-# Informo il container di esporre la porta 5000
-EXPOSE 5000
+CMD ["npx", "nodemon", "--exec", "npm start"]
+# Informo il container di esporre la porta 3000
+EXPOSE 3000
