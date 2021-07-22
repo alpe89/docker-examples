@@ -26,15 +26,25 @@ docker run -d --rm -p 3000:5000 --name react-app docker-example-fe:creazione-imm
 
 Possiamo quindi aprire nel browser `localhost:3000` ed avremo la nostra app react esposta nella sua build di produzione.
 
+> Prima di proseguire ricordiamoci di arrestare il container in vista dei prossimi esercizi
+```bash
+docker stop react-app
+```
+
 ## Uso di Docker per lo sviluppo
 
 Rimanendo sempre nella stessa branch di sviluppo possiamo sfruttare la stessa immagine (o crearne una dedicata volendo) per sviluppare direttamente all'interno di un container. Il comando per avviare un container `di sviluppo` è
 
 ```docker
-docker run -d --rm -p 3000:3000 -v "$(pwd):/project/fe/" --name dev-container docker-example-app:creazione-immagine npm start
+docker run -d --rm -p 3000:3000 -v "$(pwd)/src/:/project/fe/src/" --name dev-container docker-example-fe:creazione-immagine npm start
 ```
 
 > Attenzione: per questa sezione il comando potrebbe non funzionare correttamente sotto windows, specialmente se Docker è impostato nell'utilizzo di Linux Containers.
+
+> Prima di proseguire ricordiamoci di arrestare il container in vista dei prossimi esercizi
+```bash
+docker stop dev-container
+```
 
 ## Uso della multi stage build
 
