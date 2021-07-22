@@ -7,7 +7,7 @@
 Clonare il repository ed entrare nella cartella react-app
 
 ```bash
-git clone https://github.com/alpe89/docker-examples.git && cd react-app
+git clone https://github.com/alpe89/docker-examples.git && cd docker-examples/react-app
 ```
 
 ## Uso dell'immagine base
