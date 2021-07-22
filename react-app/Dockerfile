@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:14 AS build-stage
 # Imposto la working directory dove andrò a copiare i file che serviranno alla mia 
 # app
 WORKDIR /project/fe
@@ -10,8 +10,19 @@ USER node
 # cache al meglio
 COPY --chown=node package*.json .
 # Avvio l'installazione delle dipendenze tramite npm
-RUN npm install
-# Comando di default da eseguire all'avvio del container
-CMD ["npm", "start"]
-# Informo il container di esporre la porta 3000
-EXPOSE 3000
+RUN npm ci --silent
+# Copio i restanti file nel container
+COPY --chown=node . .
+# Eseguo la build
+RUN npm run build
+
+FROM nginx:1.21.1-alpine
+#copies React to the container directory
+# Set working directory to nginx resources directory
+WORKDIR /usr/share/nginx/html
+# Remove default nginx static resources
+RUN rm -rf ./*
+# Copies static resources from builder stage
+COPY --from=build-stage /project/fe/build .
+# Containers run nginx with global directives and daemon off
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
