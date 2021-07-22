@@ -12,6 +12,6 @@ COPY --chown=node package*.json .
 # Avvio l'installazione delle dipendenze tramite npm
 RUN npm install
 # Comando di default da eseguire all'avvio del container
-CMD ["npx", "nodemon", "--exec", "npm start"]
+CMD ["npm", "start"]
 # Informo il container di esporre la porta 3000
 EXPOSE 3000
